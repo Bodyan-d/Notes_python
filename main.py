@@ -4,6 +4,7 @@ from enum import IntEnum
 import sqlite3
 import uuid
 from src.validation import Task, TaskCreate, TaskUpdate
+from src.helpers import get_db
 
 SELECT_ALL= "SELECT * FROM tasks WHERE task_id=:task_id"
 ERROR_404 = "Task not found"
@@ -23,15 +24,6 @@ CREATE TABLE IF NOT EXISTS tasks (
 """)
 conn.commit()
 conn.close()
-
-def get_db():
-    conn = sqlite3.connect("tasks.db")
-    try:
-        yield conn
-    finally:
-        conn.close()
-        
-
 
 @app.get("/")
 def get_root():
